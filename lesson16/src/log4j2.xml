@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Appenders>
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
+        </Console>
+        <JDBC name="JDBCAppender" tableName="lesson15.&quot;LOGS&quot;">
+            <ConnectionFactory
+                    class="Main"
+                    method="getConnection"/>
+            <Column name="date" isEventTimestamp="true"/>
+            <Column name="log_level" pattern="%level" isUnicode="false"/>
+            <Column name="message" pattern="[%t] %C{2} (%F:%L) - %m%n" isUnicode="false"/>
+            <Column name="exception" pattern="%ex{full}" isUnicode="false"/>
+        </JDBC>
+    </Appenders>
+    <Loggers>
+        <Logger name="JDBCAppender" level="info">
+            <AppenderRef ref="JDBCAppender"/>
+        </Logger>
+        <Root level="info">
+            <AppenderRef ref="STDOUT"/>
+        </Root>
+    </Loggers>
+</Configuration>
